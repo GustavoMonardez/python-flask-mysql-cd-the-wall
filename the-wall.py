@@ -47,6 +47,10 @@ def register():
     data = {"fname":fname,"lname":lname,"email":email,"password":password}
     result = mysql.query_db(query, data)
     # welcoming messages
+    query = "select id from users where email=%(email)s"
+    data = {"email":email}
+    result = mysql.query_db(query, data)
+    print("id: ", result)
     session["userid"] = result[0]["id"]
     session["username"]  = fname
     flash("You've been successfully registered")
@@ -77,13 +81,17 @@ def wall():
     if "userid" not in session:
         flash("You must be logged in to access this page")
         return redirect("/")
-    query = "select first_name, last_name, messages.id, messages.message, messages.created_at from users join messages on messages.user_id = users.id where users.id=%(user_id)s;"
+    #query = "select first_name, last_name, messages.id, messages.message, messages.created_at from users join messages on messages.user_id = users.id where users.id=%(user_id)s;"
     data = {"user_id": session["userid"]}
-    result = mysql.query_db(query,data)
+    query = "select first_name, last_name, messages.id, messages.message, date_format(messages.created_at, '%M %D %Y') as created_at from users join messages on messages.user_id = users.id order by messages.created_at desc;"
+    result = mysql.query_db(query)
 
-    query = "select first_name, last_name, messages.id, comments.comment, comments.created_at from users join comments on comments.user_id = users.id join messages on messages.user_id = users.id where users.id=%(user_id)s and messages.id=comments.message_id;"
+    #query = "select first_name, last_name, messages.id, comments.comment, comments.created_at from users join comments on comments.user_id = users.id join messages on messages.user_id = users.id where users.id=%(user_id)s and messages.id=comments.message_id;"
+
+    query = "select first_name, last_name, messages.id, comments.comment, date_format(comments.created_at, '%%M %%D %%Y') as created_at from users join comments on comments.user_id = users.id join messages on messages.id = comments.message_id;"
 
     comments =  mysql.query_db(query,data)
+    print("comments98:",comments)
     return render_template("wall.html", result=result, comments=comments)
 
 @app.route("/logout", methods=["POST"])
@@ -94,7 +102,7 @@ def logout():
 @app.route("/message", methods=["POST"])
 def message():
     msg = request.form["message"]
-    query = "insert into messages(user_id, message) values(%(user_id)s, %(msg)s); "
+    query = "insert into messages(user_id, message) values(%(user_id)s, %(message)s); "
     data = {"user_id":session["userid"], "message":msg}
     mysql.query_db(query, data)
     return redirect("/wall")
@@ -102,7 +110,12 @@ def message():
 @app.route("/comment", methods=["POST"])
 def comment():
     comment = request.form["comment"]
-    print(comment)
+    message_id = request.form["message_id"]
+    query = "insert into comments(comment,message_id,user_id) values(%(comment)s, %(message_id)s, %(user_id)s);"
+    data = {"comment": comment, "message_id":message_id,"user_id":session["userid"]}
+    mysql.query_db(query, data)
+    #print(comment)
+    #print("m_id: ", request.form["message_id"])
     return redirect("/wall")
 
 def validate_data(fname,lname,email,password,cpassword):

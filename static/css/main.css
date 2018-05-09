@@ -1,0 +1,99 @@
+*{
+    margin:0px;
+    padding:0px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+}
+
+.wrapper{
+    width: 970px;
+    margin:auto;
+}
+
+h1{
+    font-size: 26px;
+    margin: 20px 0px 20px 0px;
+    width:900px;
+}
+
+h2{
+    font-size: 20px;
+}
+
+form{
+    display: inline-block;
+    width:40%;
+    vertical-align: top;   
+}
+
+.register{
+    margin-right:19%;
+}
+
+.register-error{
+    width:600px;
+    padding:15px;
+    border:1px solid silver;
+    background-color: brown;
+    color:whitesmoke;
+    margin:auto;
+    text-align: center;
+}
+
+.register-error p{
+    margin:0px;
+}
+
+.register-welcome{
+    color:#5cb85c;
+    margin-top:10px;
+}
+
+.header{
+    border-bottom:1px solid silver;
+}
+
+.wall, .welcome, .welcome p{
+    display: inline-block;
+}
+
+.wall{
+    width:70%;
+}
+
+.welcome{
+    width:30%;
+    text-align: right;
+}
+
+.welcome p{
+    line-height: 33px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.message, .make-comment{
+    width:100%;
+}
+.message h2{
+    margin:30px 0px 10px 0px;
+}
+textarea{
+    margin-bottom:10px;
+    width:100%;
+}
+
+.content{
+    margin-left:20px;
+}
+
+.posts h2, .posts h3{
+    font-size:16px;
+    font-weight: bold;
+}
+
+.make-comment h2{
+    font-weight: normal;
+    font-style: italic;
+    color:gray;
+}

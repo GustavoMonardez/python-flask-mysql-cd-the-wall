@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Registration Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css')}}">
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Login and Registration</h1>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="register-error">
+            {% for message in messages %}
+                <p>{{message}}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        <form action="/register" method="POST" class="register">
+            <h2>Register here!</h2>
+            <div class="form-group">
+                <label for="fname">First Name:</label>
+                <input type="text" name="fname" class="form-control" value="{{session['name']}}">
+            </div>
+            <div class="form-group">
+                <label for="lname">Last Name:</label>
+                <input type="text" name="lname" class="form-control" value="{{session['name']}}">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" name="email" class="form-control" value="{{session['name']}}">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" class="form-control" value="{{session['name']}}">
+            </div>
+            <div class="form-group">
+                <label for="cpassword">Confirm Password:</label>
+                <input type="password" name="cpassword" class="form-control" value="{{session['name']}}">
+            </div>
+            <button type="submit" class="btn btn-success">Register</button>
+        </form>
+        <form action="/login" method="POST" class="login">
+            <h2>Login here!</h2>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" name="email" class="form-control" value="{{session['name']}}">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" class="form-control" value="{{session['name']}}">
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</body>
+</html>
